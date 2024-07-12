@@ -10,7 +10,7 @@ from napari_cool_tools_io import torch, viewer, device, memory_stats
 from magicgui import magic_factory
 import cv2
 
-
+"""change git hub user name"""
 @magic_factory(low_pass={"label": "Low Pass Filter", "widget_type": "CheckBox"}, cutoff={"label": "Cutoff Frequency", "widget_type": "FloatSlider", "min": 0.01, "max": 0.5, "step": 0.01})
 def fourier_filter_gui(img: Image, low_pass: bool = True, cutoff: float = 0.1):
     fourier_filter_worker(img.data, low_pass, cutoff)
