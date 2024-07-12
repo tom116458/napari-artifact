@@ -1,57 +1,12 @@
 name: napari-artifact
-display_name: Artifacts remover
-# use 'hidden' to remove plugin from napari hub search results
-visibility: public
-# see https://napari.org/stable/plugins/manifest.html for valid categories
-categories: ["Annotation", "Segmentation", "Acquisition"]
+display_name: Napari Artifact
 contributions:
-  commands:
-    - id: napari-artifact.get_reader
-      python_name: napari_artifact._reader:napari_get_reader
-      title: Open data with Artifacts remover
-    - id: napari-artifact.write_multiple
-      python_name: napari_artifact._writer:write_multiple
-      title: Save multi-layer data with Artifacts remover
-    - id: napari-artifact.write_single_image
-      python_name: napari_artifact._writer:write_single_image
-      title: Save image data with Artifacts remover
-    - id: napari-artifact.make_sample_data
-      python_name: napari_artifact._sample_data:make_sample_data
-      title: Load sample data from Artifacts remover
-    - id: napari-artifact.make_container_widget
-      python_name: napari_artifact:ImageThreshold
-      title: Make threshold Container widget
-    - id: napari-artifact.make_magic_widget
-      python_name: napari_artifact:threshold_magic_widget
-      title: Make threshold magic widget
-    - id: napari-artifact.make_function_widget
-      python_name: napari_artifact:threshold_autogenerate_widget
-      title: Make threshold function widget
-    - id: napari-artifact.make_qwidget
-      python_name: napari_artifact:ExampleQWidget
-      title: Make example QWidget
-  readers:
-    - command: napari-artifact.get_reader
-      accepts_directories: false
-      filename_patterns: ['*.npy']
-  writers:
-    - command: napari-artifact.write_multiple
-      layer_types: ['image*','labels*']
-      filename_extensions: []
-    - command: napari-artifact.write_single_image
-      layer_types: ['image']
-      filename_extensions: ['.npy']
-  sample_data:
-    - command: napari-artifact.make_sample_data
-      display_name: Artifacts remover
-      key: unique_id.1
+  commands: 
+    - id: napari-artifact.remove_artifact
+      title: Remove Artifact
+      python_name: napari_artifact.artifact:fourier_filter_gui
+
   widgets:
-    - command: napari-artifact.make_container_widget
-      display_name: Container Threshold
-    - command: napari-artifact.make_magic_widget
-      display_name: Magic Threshold
-    - command: napari-artifact.make_function_widget
-      autogenerate: true
-      display_name: Autogenerate Threshold
-    - command: napari-artifact.make_qwidget
-      display_name: Example QWidget
+    - command: napari-artifact.remove_artifact
+      display_name: Remove Artifact
+      autogenerate: false
