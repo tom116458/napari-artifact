@@ -8,6 +8,9 @@ contributions:
     - id: napari-artifact.remove_artifact_numpy
       title: Remove Artifact
       python_name: napari_artifact.artifact_numpy:fourier_filter_gui_numpy
+    - id: napari-artifact.remove_artifact_torch
+      title: Remove Artifact
+      python_name: napari_artifact.artifact_torch:fourier_filter_gui_torch
 
   widgets:
     - command: napari-artifact.remove_artifact_cupy
@@ -15,4 +18,7 @@ contributions:
       autogenerate: false
     - command: napari-artifact.remove_artifact_numpy
       display_name: Remove Artifact (NumPy)
+      autogenerate: false
+    - command: napari-artifact.remove_artifact_torch
+      display_name: Remove Artifact (PyTorch)
       autogenerate: false
