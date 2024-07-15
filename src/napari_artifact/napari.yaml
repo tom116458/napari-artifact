@@ -2,11 +2,17 @@ name: napari-artifact
 display_name: Napari Artifact
 contributions:
   commands: 
-    - id: napari-artifact.remove_artifact
+    - id: napari-artifact.remove_artifact_cupy
       title: Remove Artifact
-      python_name: napari_artifact.artifact:fourier_filter_gui
+      python_name: napari_artifact.artifact_cupy:fourier_filter_gui_cupy
+    - id: napari-artifact.remove_artifact_numpy
+      title: Remove Artifact
+      python_name: napari_artifact.artifact_numpy:fourier_filter_gui_numpy
 
   widgets:
-    - command: napari-artifact.remove_artifact
-      display_name: Remove Artifact
+    - command: napari-artifact.remove_artifact_cupy
+      display_name: Remove Artifact (CuPy)
+      autogenerate: false
+    - command: napari-artifact.remove_artifact_numpy
+      display_name: Remove Artifact (NumPy)
       autogenerate: false

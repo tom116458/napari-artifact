@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.fftpack import fft2, ifft2, fftshift
-from napari.layers import Image
 import napari
 from napari.utils.notifications import show_info
 from napari.layers import Image, Layer
@@ -8,14 +7,14 @@ from napari.types import ImageData
 from napari.qt.threading import thread_worker
 from napari_cool_tools_io import torch, viewer, device, memory_stats
 from magicgui import magic_factory
+import time
 import cv2
 
-"""change git hub user name"""
 @magic_factory(low_pass={"label": "Low Pass Filter", "widget_type": "CheckBox"}, cutoff={"label": "Cutoff Frequency", "widget_type": "FloatSlider", "min": 0.01, "max": 0.5, "step": 0.01})
-def fourier_filter_gui(img: Image, low_pass: bool = True, cutoff: float = 0.1):
-    fourier_filter_worker(img.data, low_pass, cutoff)
+def fourier_filter_gui_numpy(img: Image, low_pass: bool = True, cutoff: float = 0.1):
+    fourier_filter_worker_numpy(img.data, low_pass, cutoff)
 
-def fourier_filter(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
+def fourier_filter_numpy(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
     """Implementation of Fourier filter function
     Args:
         data (ImageData): Image/Volume to be filtered.
@@ -51,9 +50,12 @@ def fourier_filter(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) 
     return np.real(filtered_data)
 
 @thread_worker(connect={"yielded": lambda x: viewer.add_image(x, name="Filtered Image")})
-def fourier_filter_worker(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
-    show_info("Filtering image with Fourier filter")
-    output = fourier_filter(data, low_pass, cutoff)
+def fourier_filter_worker_numpy(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
+    show_info("Filtering image with Fourier filter using numpy")
+    start = time.time()
+    output = fourier_filter_numpy(data, low_pass, cutoff)
+    processing_time = time.time() - start  # End timing
+    show_info(f"Image processing time: {processing_time:.4f} seconds")
     torch.cuda.empty_cache()
     memory_stats()
     yield output
