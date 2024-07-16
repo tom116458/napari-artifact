@@ -18,6 +18,13 @@ def fourier_filter_gui_cupy(img: Image, low_pass: bool = True, cutoff: float = 0
 
 def fourier_filter_cupy(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
     data = cp.asarray(data)
+
+    if data.ndim == 2:
+        return _fourier_filter_2d(data, low_pass, cutoff)
+    elif data.ndim == 3:
+        return cp.stack([cp.asarray(_fourier_filter_2d(data[i], low_pass, cutoff)) for i in range(data.shape[0])], axis=0)
+    
+def _fourier_filter_2d(data, low_pass, cutoff):
     f_transform = fftshift(fft2(data))
     rows, cols = data.shape
     crow, ccol = rows // 2, cols // 2
@@ -39,12 +46,13 @@ def fourier_filter_cupy(data: ImageData, low_pass: bool = True, cutoff: float = 
 def fourier_filter_worker_cupy(data: ImageData, low_pass: bool = True, cutoff: float = 0.1) -> ImageData:
     show_info("Filtering image with Fourier filter using CuPy")
     start = time.time()
+    data = cp.asarray(data)
     output = fourier_filter_cupy(data, low_pass, cutoff)
     processing_time = time.time() - start
     show_info(f"Image processing time: {processing_time:.4f} seconds")
     cp.get_default_memory_pool().free_all_blocks()
     memory_stats()
-    yield output
+    yield output.get()
 
 
 
