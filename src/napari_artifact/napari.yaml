@@ -14,6 +14,9 @@ contributions:
     - id: napari-artifact.remove_artifact_transformer
       title: Remove Artifact
       python_name: napari_artifact.artifact_transformer:fourier_filter_gui_torch
+    - id: napari-artifact.export_img
+      title: Save Image
+      python_name: napari_artifact.export_img:save_labels_as_png_gui
 
   widgets:
     - command: napari-artifact.remove_artifact_cupy
@@ -28,3 +31,7 @@ contributions:
     - command: napari-artifact.remove_artifact_transformer
       display_name: Remove Artifact (Transformer)
       autogenerate: false
+    - command: napari-artifact.export_img
+      display_name: Export Image
+      autogenerate: false
+
