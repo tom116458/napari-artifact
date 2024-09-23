@@ -16,7 +16,7 @@ contributions:
       python_name: napari_artifact.artifact_transformer:fourier_filter_gui_torch
     - id: napari-artifact.export_img
       title: Save Image
-      python_name: napari_artifact.export_img:save_labels_as_png_gui
+      python_name: napari_artifact.export_img:save_slices_as_png_gui
 
   widgets:
     - command: napari-artifact.remove_artifact_cupy
